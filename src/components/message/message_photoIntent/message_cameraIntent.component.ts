@@ -67,8 +67,8 @@ export class MessageCameraIntentComponent extends BaseMessageWithToast implement
   }
 
   public getImage() {
-    //Camera.getPicture returns a Promise, so should implement success and error cb functions
-    console.log('Getting Photo');
+    //Camera.getPicture returns a Promise, so should implement success and error cb functionsz
+    console.log('Getting Photo 2');
     this.camera.getPicture(this.default_camera_options).then((imageData) => {
       // data is base64:
       this.base64ImagesString.push(imageData + '');
