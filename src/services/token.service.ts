@@ -5,7 +5,8 @@ import { Observable } from "rxjs/Observable";
 @Injectable()
 export class TokenService {
 
-  private url: string = 'http://api.cemobile.eu/gv/token';
+
+  private url: string = 'http://neorisdilmx.southcentralus.cloudapp.azure.com/gv/token';
 
   constructor(public httpClient: HttpClient) {}
 
