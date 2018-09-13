@@ -1,0 +1,20 @@
+<!-- Generated template for the MessageButtonsComponent component -->
+<div class="neo-content">
+  <message-inner-text [text]="message.msgBody"></message-inner-text>
+  <br/>
+  <ion-grid *ngIf="!isAllDone">
+    <ion-row>
+      <ion-col *ngFor="let option of message.options">
+        <button ion-button (click)="onSelectOption(option)">
+          {{ option.label }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="isAllDone">
+    <p text-center>{{ selectOption }}</p>
+  </div>
+
+</div>
+

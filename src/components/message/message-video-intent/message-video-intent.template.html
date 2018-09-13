@@ -1,0 +1,37 @@
+<!-- Generated template for the MessageVideoIntentComponent component -->
+<div *ngIf="!videoRetrieved" class="neo-content">
+  <message-inner-text [text]="message.msgBody"></message-inner-text>
+  <br/>
+
+  <button *ngIf="!recording" ion-button icon-only (click)="getVideo()">
+    <ion-icon ios="ios-videocam" md="md-videocam"></ion-icon>
+  </button>
+
+</div>
+
+
+<div *ngIf="videoRetrieved" class="neo-content">
+  <p>Este es el video que acaba de {{!isAllDone ? 'grabar':'enviar'}}:</p>
+  <hr />
+  <video #videoOutput controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" width="200" height="160"></video>
+  <hr/>
+  <div *ngIf="!isAllDone">
+    <p>¿Es correcto?</p>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button (click)="sendVideo()">
+            Sí
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button (click)="repeatVideo()">
+            No, repetir
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>
+
+

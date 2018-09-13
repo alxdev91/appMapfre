@@ -1,0 +1,128 @@
+.box-bot {
+  min-width: 100px;
+  max-width: 85%;
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  text-align: center;
+  font-weight: 900;
+  background-color: color($colors, secondary);
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  color: #fff;
+  position: relative;
+  left: 5px;
+  z-index: 0;
+}
+.sb4-bot {
+  &:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid color($colors, secondary);
+    border-right: 10px solid transparent;
+    border-top: 10px solid color($colors, secondary);
+    border-bottom: 10px solid transparent;
+    left: 19px;
+    bottom: -19px;
+    z-index: 1;
+  }
+}
+.box-user {
+  min-width: 100px;
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  text-align: center;
+  font-weight: 900;
+  background-color: color($colors, primary);
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  color: #fff;
+  right: 5px;
+  position: relative;
+  z-index: 0;
+}
+
+.sb4-user{
+  &:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid color($colors, primary);
+    border-top: 10px solid color($colors, primary);
+    border-bottom: 10px solid transparent;
+    right: 19px;
+    bottom: -19px;
+    z-index: 1;
+  }
+}
+
+.box-user h1, .box-bot h1,
+.box-user h2, .box-bot h2,
+.box-user h3, .box-bot h3,
+.box-user h4, .box-bot h4,
+.box-user h5, .box-bot h5 {
+  display: inline-block;
+}
+
+.row-start {
+  flex-flow: row-reverse;
+}
+
+.fotoHeader {
+  margin-left: 3%;
+  max-width: 75%;
+}
+
+img {
+  max-width: 75%;
+}
+.botAnim{
+  animation-delay: 0.2s;
+}
+
+.box-bot, .box-user {
+  &.neo-contrary {
+    background-color: #FCFB8F;
+    padding: 5px;
+    color: black;
+  }
+
+  &.neo-driver {
+    background-color: #EAFFFF;
+    padding: 5px;
+    color: black;
+  }
+}
+
+.sb4-user, .sb4-bot {
+  &.neo-contrary {
+    &:before {
+      border-left: 10px solid #FCFB8F;
+      border-top: 10px solid #FCFB8F;
+    }
+
+  }
+
+  &.neo-driver {
+    &:before {
+      border-left: 10px solid #EAFFFF;
+      border-top: 10px solid #EAFFFF;
+    }
+  }
+}
+
+.input-footer {
+  .item-input {
+    padding-right: 16px;
+  }
+  .item-inner {
+    padding-right: 0px;
+  }
+}

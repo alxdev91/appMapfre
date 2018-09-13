@@ -1,0 +1,40 @@
+<!-- Generated template for the MessageAbstract component -->
+<div *ngIf="!imgRetrieved" class="neo-content">
+
+  <div >
+    <message-inner-text [text]="message.msgBody"></message-inner-text>
+    <br/>
+    <button ion-button icon-only (click)="getImage()">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="imgRetrieved" class="neo-content">
+  <p *ngIf="!hasMoreThanOnePhoto()">Esta es la foto que acaba de hacer: </p>
+  <p *ngIf="hasMoreThanOnePhoto()">Estas son las fotos que acaba de hacer: </p>
+  <br/>
+  <img *ngFor="let base64ImageString of base64ImagesString"
+    [src]="base64ImageString | domseguro:'data:image/jpeg;base64,'"
+    class="responsive" />
+  <hr/>
+  <div *ngIf="!isAllDone">
+  <p *ngIf="!hasMoreThanOnePhoto()">¿Desea enviar la imagen?</p>
+  <p *ngIf="hasMoreThanOnePhoto()">¿Desea enviar las imagenes?</p>
+  <ion-grid class="neo-grid">
+    <ion-row>
+      <ion-col col-md-6 col-xs-12>
+        <button ion-button (click)="sendImage()">
+          Sí
+        </button>
+      </ion-col>
+      <ion-col col-md-6 col-xs-12>
+        <button ion-button icon-left (click)="getImage()">
+          No, añadir más imagenes
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+
+</div>

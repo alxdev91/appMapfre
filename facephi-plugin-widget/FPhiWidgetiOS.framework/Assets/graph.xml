@@ -1,0 +1,103 @@
+<FPhiGraph name="Facephi original widget from 5.5.1" version="1.0">
+    <States>
+        <State name="UCNothing"/>
+        <State name="UCWaitingFacePrev">
+            <Transition name="FromWaitingFacePrevToWaitingFace" to="UCWaitingFace"/>
+        </State>
+        <State name="UCWaitingFace">
+            <Transition name="FromWaitingFaceToExtracting" to="UCExtracting"/>
+            <Transition name="FromWaitingFaceToTimeout" to="UCTimeout"/>
+            <Transition name="FromWaitingFaceToError" to="UCFinishPrev"/>
+            <Transition name="FromWaitingFaceToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCExtracting">
+            <Transition name="FromExtractingToFinish" to="UCFinishPrev"/>
+            <Transition name="FromExtractingToTimeout" to="UCTimeout"/>
+            <Transition name="FromExtractingToShowResults" to="UCShowResults"/>
+            <Transition name="FromExtractingToLiveness" to="UCLivenessDetectionStep1"/>
+            <Transition name="FromExtractingToCancel" to="UCCancelByUserPrev"/>
+
+            <Transition name="FromExtractingToLivenessMove" to="UCLivenessMoveStabilizing"/>
+        </State>
+        <State name="UCWizardInitialTip">
+            <Transition name="FromInitialTipToCycleTip" to="UCWizardCycleTip"/>
+            <Transition name="FromInitialTipToCancel" to="UCCancelByUserPrev"/>
+            <Transition name="FromInitialTipToWaitingFaceStart" to="UCWaitingFaceStart"/>
+        </State>
+        <State name="UCWizardCycleTip">
+            <Transition name="FromCycleTipToWaitingFaceStart" to="UCWaitingFaceStart"/>
+            <Transition name="FromCycleTipToCancel" to="UCCancelByUserPrev"/>
+            <Transition name="FromCycleTipToBack" to="UCWizardInitialTip"/>
+        </State>
+        <State name="UCWaitingFaceStart">
+            <Transition name="FromWaitingFaceStartToWaitingFace" to="UCWaitingFace"/>
+            <Transition name="FromWaitingFaceStartToCancel" to="UCCancelByUserPrev"/>
+            <Transition name="FromWaitingFaceStartToUCWizardInitialTip" to="UCWizardInitialTip"/>
+            <Transition name="FromWaitingFaceStartToUCWizardCycleTip" to="UCWizardCycleTip"/>
+        </State>
+        <State name="UCFinish"/>
+        <State name="UCCancelByUserPrev">
+            <Transition name="FromCancelByUserPrevToCancel" to="UCCancelByUser"/>
+        </State>
+        <State name="UCCancelByUser"/>
+        <State name="UCShowResults">
+            <Transition name="FromShowResultsToWizardCompleted" to="UCWizardCompleted"/>
+            <Transition name="FromShowResultsToCancel" to="UCCancelByUserPrev"/>
+            <Transition name="FromShowResultsToRepeat" to="UCWaitingFaceStart"/>
+        </State>
+        <State name="UCWizardCompleted">
+            <Transition name="FromWizardCompletedToFinish" to="UCFinishPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep1">
+            <Transition name="FromLiveness1ToLiveness2" to="UCLivenessDetectionStep2"/>
+            <Transition name="FromLiveness1ToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep2">
+            <Transition name="FromLiveness2ToLiveness3" to="UCLivenessDetectionStep3"/>
+            <Transition name="FromLiveness2ToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCLivenessDetectionStep3">
+            <Transition name="FromLiveness3ToFinish" to="UCFinishPrev"/>
+            <Transition name="FromLiveness3ToEyeDetection" to="UCWaitingEyeDetection"/>
+            <Transition name="FromLiveness3ToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCFinishPrev">
+            <Transition name="FromFinishPrevToFinish" to="UCFinish"/>
+        </State>
+        <State name="UCWaitingEyeDetection">
+            <Transition name="FromWaitingEyeDetectionToCancel" to="UCCancelByUserPrev"/>
+            <Transition name="FromWaitingEyeDetectionToTimeout" to="UCTimeout"/>
+            <Transition name="FromWaitingEyeDetectionToLiveness1" to="UCLivenessDetectionStep1"/>
+            <Transition name="FromWaitingEyeDetectionToLiveness2" to="UCLivenessDetectionStep2"/>
+            <Transition name="FromWaitingEyeDetectionToFinish" to="UCFinishPrev"/>
+        </State>
+        <State name="UCTimeout"/>
+        <State name="UCQR">
+            <Transition name="FromQRToTimeout" to="UCTimeout"/>
+            <Transition name="FromQRToChangeCamera" to="UCQRChangeCamera"/>
+            <Transition name="FromQRToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCQRChangeCamera">
+            <Transition name="FromQRChangeCameraToQRCameraChanged" to="UCQRCameraChanged"/>
+            <Transition name="FromQRChangeCameraToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        <State name="UCQRCameraChanged">
+            <Transition name="FromQRCameraChangedToWaitingFace" to="UCWaitingFacePrev"/>
+            <Transition name="FromQRCameraChangedToCancel" to="UCCancelByUserPrev"/>
+        </State>
+        
+        <State name="UCLivenessMoveStabilizing">
+            <Transition name="FromLivenessMoveStabilizingToLivenessMoveStabilized" to="UCLivenessMoveStabilized"/>
+            <Transition name="FromLivenessMoveStabilizingToTimeout" to="UCLivenessMoveStabilized"/>
+        </State>
+        <State name="UCLivenessMoveStabilized">
+            <Transition name="FromLivenessMoveStabilizedToLivenessMoveDetecting" to="UCLivenessMoveDetecting"/>
+        </State>
+        <State name="UCLivenessMoveDetecting">
+            <Transition name="FromLivenessMoveDetectingToLivenessMoveDetected" to="UCLivenessMoveDetected"/>
+        </State>
+        <State name="UCLivenessMoveDetected">
+            <Transition name="FromLivenessMoveDetectedToLivenessMoveStabilizing" to="UCLivenessMoveStabilizing"/>
+        </State>
+    </States>
+</FPhiGraph>

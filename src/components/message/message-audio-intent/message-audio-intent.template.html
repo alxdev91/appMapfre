@@ -1,0 +1,47 @@
+<div *ngIf="!audioRetrieved" class="neo-content">
+  <message-inner-text [text]="message.msgBody"></message-inner-text>
+  <br/>
+  <button *ngIf="!recording" ion-button icon-only (click)="startRecord()">
+    <ion-icon ios="ios-mic" md="md-mic"></ion-icon>
+  </button>
+
+  <button *ngIf="recording" ion-button icon-only padding (click)="stopRecord()">Grabando
+    <ion-spinner name="bubbles" color="white"></ion-spinner>
+  </button>
+
+</div>
+
+<div *ngIf="audioRetrieved" class="neo-content">
+
+  <p>Este es el audio que acaba de {{!isAllDone ? 'grabar':'enviar'}}:</p>
+
+  <ion-item [ngSwitch]="playing">
+
+    <p>{{fileName}}</p>
+    <button *ngSwitchCase="false" ion-button clear (click)="playAudio()">
+      <ion-icon name="play"></ion-icon>
+    </button>
+    <button *ngSwitchCase="true" ion-button clear (click)="stopAudio()">
+      <ion-icon name="pause"></ion-icon>
+    </button>
+
+  </ion-item>
+  <div *ngIf="!isAllDone">
+    <p>¿Es correcto?</p>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button (click)="sendAudio()">
+            Sí
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button (click)="repetirAudio()">
+            No, repetir
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

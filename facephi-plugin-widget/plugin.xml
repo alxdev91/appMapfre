@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="facephi-plugin-widget" version="5.5.1.17" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>WidgetFacephi</name>
+  <description>Facephi Widget Plugin for Cordova</description>
+  <license>Apache 2.0</license>
+  <keywords>cordova,facephi,Widget,android,ios</keywords>
+
+  <js-module src="www/WidgetConfig.js"  name="WidgetConfig">
+    <clobbers target="facephi.widget.config" />
+  </js-module>
+  <js-module src="www/WidgetLivenessDiagnostic.js"  name="WidgetLivenessDiagnostic">
+    <clobbers target="facephi.widget.liveness" />
+  </js-module>
+  <js-module src="www/WidgetErrorType.js"  name="WidgetErrorType">
+    <clobbers target="facephi.widget.error" />
+  </js-module>
+  <js-module src="www/WidgetFinishStatus.js"  name="WidgetFinishStatus">
+    <clobbers target="facephi.widget.finish" />
+  </js-module>
+  <js-module src="www/WidgetMode.js"  name="WidgetMode">
+    <clobbers target="facephi.widget.mode" />
+  </js-module>
+  <js-module src="www/WidgetResult.js"  name="WidgetResult">
+    <clobbers target="facephi.widget.result" />
+  </js-module>
+  <js-module src="www/WidgetUtils.js"  name="WidgetUtils">
+    <clobbers target="facephi.widget.utils" />
+  </js-module>
+  <js-module src="www/WidgetFacephi.js"  name="WidgetFacephi">
+    <clobbers target="facephi.widget.universal" />
+  </js-module>
+
+
+	<platform name="android">
+		<framework src="com.android.support:appcompat-v7:+" />
+		<framework src="com.android.support:design:+"/>
+		<framework src="com.android.support:percent:+"/>
+		<source-file src="src/android/res/styles.xml" target-dir="res/values" />
+		<source-file src="fphi-widget-resources-SelphiLive-1.0.zip" target-dir="assets" />
+		<config-file parent="/*" target="config.xml">
+			<feature name="WidgetFacephi">
+				<param name="android-package" value="facephi.plugin.widget.WidgetFacephi" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.CAMERA" />
+      <uses-feature android:name="android.hardware.camera" />
+      <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    </config-file>
+	 <config-file target="AndroidManifest.xml" parent="/manifest/application">
+    	  <activity android:name="com.facephi.FPhiWidgetAndroid.ui.FPhiWidgetAndroid" android:label="WidgetAndroid"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" />
+        <activity android:name="com.facephi.FPhiWidgetAndroid.ui.FPhiWidgetPermission" android:label="WidgetPermission"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+			android:theme="@style/Fphi_White"/>
+		<activity android:name="com.facephi.FPhiWidgetAndroid.tutorial.TutorialActivity" android:label="Widgettutorial"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+			android:theme="@style/Fphi_White"/>
+     </config-file>
+
+
+        <source-file src="src/android/OutputBundle.java" target-dir="src/facephi/plugin/widget" />
+        <source-file src="src/android/WidgetFacephi.java" target-dir="src/facephi/plugin/widget" />
+        <source-file src="src/android/QRValidator.java" target-dir="src/facephi/plugin/widget" />
+		<framework custom="true" src="src/android/build.gradle" type="gradleReference" />
+		<resource-file src="src/android/aar/fphi-widget-android.aar"
+                  target="aar/fphi-widget-android.aar" />
+	</platform>
+
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="WidgetFacephi">
+                <param name="ios-package" value="WidgetFacephi" />
+            </feature>
+        </config-file>
+		<preference name="CAMERA_USAGE_DESCRIPTION" default="This app needs camera access"/>
+		<config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+			<string>$CAMERA_USAGE_DESCRIPTION</string>
+		</config-file>
+
+        <framework src="QuartzCore.framework" />
+        <framework src="UIKit.framework" />
+        <framework src="GLKit.framework" />
+        <framework src="CoreMotion.framework" />
+        <framework src="libc++.dylib" />
+        <framework src="Foundation.framework" />
+
+        <framework src="FPBExtractoriOS.framework" custom="true" embed="true"/>
+        <framework src="FPBExtractoriOS.framework"/>
+        <framework src="FPhiWidgetiOS.framework" custom="true" embed="true"/>
+		<framework src="FPhiWidgetiOS.framework"/>
+        <resource-file src="fphi-widget-resources-SelphiLive-1.0.zip" />
+        <source-file src="WidgetFacephi.m" />
+    </platform>
+</plugin>

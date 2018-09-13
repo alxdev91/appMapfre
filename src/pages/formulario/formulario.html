@@ -1,0 +1,275 @@
+<!--
+  Generated template for the FormularioPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <img src="assets/imgs/logoHeader.png" class="fotoHeader" />
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="animated fadeInDownBig" padding>
+  <h1 padding text-center>{{asegurado.nombre || 'Sin especificar'}}</h1>
+  <hr/>
+  <!--CONDUCTOR-->
+  <ion-card text-wrap>
+    <ion-card-header  (click)="printInsured()">
+      <h1 ion-text color="white">Conductor</h1>
+    </ion-card-header>
+
+    <ion-card-content padding>
+
+      <ion-list>
+        <ion-item>
+          <ion-label floating color="primary">Nombre
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.nombre" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Apellidos
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.apellidos" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Número de teléfono
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.telefono" type="tel"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!--VEHÍCULO-->
+  <ion-card text-wrap>
+
+    <ion-card-header >
+      <h1 ion-text color="white">Vehículo</h1>
+    </ion-card-header>
+
+
+    <ion-card-content padding>
+
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating color="primary">Matrícula
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.matricula" type="text"></ion-input>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <!--ASEGURADORA-->
+  <ion-card text-wrap>
+
+    <ion-card-header>
+      <h1 ion-text color="white">Aseguradora</h1>
+    </ion-card-header>
+    <hr>
+
+
+    <ion-card-content padding>
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating color="primary">Nombre de la aseguradora
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.agencia" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Número de la póliza
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="asegurado.poliza" type="number"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  <h1 padding text-center>{{contrario.nombre || 'Sin especificar'}}</h1>
+  <hr/>
+
+  <!--
+       ##############################################################################
+       ##############################################################################
+       ##############################################################################
+       ##############################################################################
+  -->
+
+  <ion-card text-wrap>
+    <ion-card-header class="a" (click)="printInsured()">
+      <h1 ion-text color="white">Contrario</h1>
+    </ion-card-header>
+
+    <ion-card-content padding>
+
+      <ion-list>
+        <ion-item>
+          <ion-label floating color="primary">Nombre
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.nombre" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Apellidos
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.apellidos" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Número de teléfono
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.telefono" type="tel"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!--VEHÍCULO-->
+  <ion-card text-wrap>
+
+    <ion-card-header class="a">
+      <h1 ion-text color="white">Vehículo</h1>
+    </ion-card-header>
+
+
+    <ion-card-content padding>
+
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating color="primary">Matrícula
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.matricula" type="text"></ion-input>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <!--ASEGURADORA-->
+  <ion-card text-wrap>
+
+    <ion-card-header class="a">
+      <h1 ion-text color="white">Aseguradora</h1>
+    </ion-card-header>
+
+
+    <ion-card-content padding>
+      <ion-list>
+
+        <ion-item>
+          <ion-label floating color="primary">Nombre de la aseguradora
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.agencia" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating color="primary">Número de la póliza
+            <strong>*</strong>
+          </ion-label>
+          <ion-input [(value)]="contrario.poliza" type="number"></ion-input>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  <h2 text-center >Otros</h2>
+  <hr/>
+
+  <ion-card>
+
+    <ion-card-header class="b">
+      <h1 ion-text color="white">Observaciones</h1>
+    </ion-card-header>
+    <hr/>
+
+    <ion-card-content>
+      <ion-item class="audio-item" [ngSwitch]="playing" *ngIf="hasAudio()">
+
+        <p>{{fileName}}</p>
+        <button *ngSwitchCase="false" ion-button clear (click)="playAudio()">
+          <ion-icon name="play"></ion-icon>
+        </button>
+        <button *ngSwitchCase="true" ion-button clear (click)="stopAudio()">
+          <ion-icon name="pause"></ion-icon>
+        </button>
+
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngIf="hasImages()">
+
+    <ion-card-header class="b">
+      <h1 ion-text color="white">Imagenes del accidente</h1>
+    </ion-card-header>
+
+    <ion-card-content padding>
+      <div class="video-item">
+      <img *ngFor="let base64_accidente of base64_accidentes"
+        style="width: 100%"
+        [src]="base64_accidente | domseguro:'data:image/jpeg;base64,'" />
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngIf="hasVideo()">
+
+    <ion-card-header class="b">
+      <h1 ion-text color="white">Video del accidente</h1>
+    </ion-card-header>
+
+    <ion-card-content padding>
+      <div class="video-item">
+        <video #videoOutput
+          [src]="urlVideoAccidente"
+          controls="controls"
+          preload="metadata"
+          webkit-playsinline="webkit-playsinline"
+          width="200"
+          height="160">
+        </video>
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+
+    <button ion-button block icon-left color="secondary" (click)="goOut()">
+      <p padding>Enviar</p>
+
+    <ion-icon name="send" color="white"></ion-icon>
+    </button>
+
+</ion-content>
+

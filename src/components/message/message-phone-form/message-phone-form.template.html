@@ -1,0 +1,42 @@
+<!-- Generated template for the MessagePhoneFormComponent component -->
+<div class="neo-content">
+  <message-inner-text [text]="message.msgBody"></message-inner-text>
+  <br/>
+  <ion-grid *ngIf="!isAllDone">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input
+            type="tel"
+            placeholder="Ej: +34612345678"
+            [required] = "requiredPhoneNumber"
+            maxLength="15"
+            #phone="ngModel"
+            [(ngModel)]="phoneNumber"
+            (ionFocus)="resetValidation()"
+            (keyup.enter)="sendPhoneNumber()">
+          </ion-input>
+        </ion-item>
+        <p [ngClass]="{'neo-phone-error-hide': isValidPhone}">Formato de télefono incorrecto. Ej: +34612345678.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button item-right (click)="sendPhoneNumber()">
+          Confirmar
+        </button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button (click)="noGivePhoneNumber()">
+          Paso
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="isAllDone">
+    <p *ngIf="!noGivePhone" text-center>{{ phoneNumber }}</p>
+    <p *ngIf="noGivePhone" text-center>Paso</p>
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+<!-- Generated template for the MessageAbstract component -->
+<div *ngIf="!imgRetrieved" class="neo-content">
+  <div>
+    <message-inner-text [text]="message.msgBody"></message-inner-text>
+    <br/>
+    <button ion-button icon-only (click)="getImage()">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="imgRetrieved" class="neo-content">
+  <p>Este es la foto que acaba de hacer: </p>
+  <br/>
+  <img [src]="base64ImageString | domseguro:'data:image/jpeg;base64,'" class="responsive">
+  <hr/>
+
+  <button *ngIf="loading" ion-button icon-only padding disabled>Analizando Matrícula
+    <ion-spinner name="bubbles" color="white"></ion-spinner>
+  </button>
+  <div *ngIf="matriculaRetrieved && !isAllDone" class="neo-info">
+    <p text-center>Esta es la matricula que he reconocido: </p>
+    <p text-center>{{this.matricula}}</p>
+    <p text-center>¿Es correcto?</p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button ion-button (click)="saveImage()">
+            Sí
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-left (click)="getImage()">
+            No, repetir
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

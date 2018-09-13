@@ -1,0 +1,31 @@
+.circle{
+
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  overflow: hidden;
+
+}
+.d-flex{
+
+  display: flex;
+
+
+}
+.max-h{
+
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+
+}
+.input-footer{
+
+  background: transparent;
+  height: 50px !important;
+
+}

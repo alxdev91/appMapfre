@@ -1,0 +1,56 @@
+<!-- Generic message for plain-text outpuC -->
+<message-text
+  *ngIf="message.type == textType"
+  [message]="message">
+</message-text>
+<!--  0 for PHOTO, 1 for VIDEO or any for both  -->
+<message-camera-intent
+  *ngIf="message.type == cameraIntentType"
+  (blockInput)="blockInput($event)"
+  [message]="message" [intentType]="0" >
+</message-camera-intent>
+<message-matricula-intent
+  *ngIf="message.type == matricula1IntentType"
+  [message]="message"
+  [intentType]="1">
+</message-matricula-intent>
+
+<message-matricula-intent
+  *ngIf="message.type == matricula2IntentType"
+  [message]="message"
+  [intentType]="2">
+</message-matricula-intent>
+<!--
+<message-camera-intent *ngIf="message.type == videoIntentType" [message]="message" [intentType]="1"></message-camera-intent>
+<message-camera-intent *ngIf="message.type == cameraIntentType" [message]="message" [intentType]="2"></message-camera-intent>
+-->
+
+<!-- Audio -->
+<message-audio-intent
+  *ngIf="message.type === audioIntentType"
+  (blockInput)="blockInput($event)"
+  [message]="message">
+</message-audio-intent>
+<!-- Video -->
+<message-video-intent
+  *ngIf="message.type === videoIntentType"
+  (blockInput)="blockInput($event)"
+  [message]="message">
+</message-video-intent>
+
+<message-buttons
+  *ngIf="message.type === buttonsType"
+  (blockInput)="blockInput($event)"
+  [message]="message">
+</message-buttons>
+
+<message-dni-intent
+  *ngIf="message.type === dniIntentType"
+  [message]="message">
+</message-dni-intent>
+
+<message-phone-form
+  *ngIf="message.type === phoneFormType"
+  (blockInput)="blockInput($event)"
+  [message]="message">
+</message-phone-form>

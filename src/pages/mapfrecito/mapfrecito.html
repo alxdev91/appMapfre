@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="primary" hideBackButton="false">
+
+    <img src="assets/imgs/logoHeader.png" class="fotoHeader" />
+
+    <ion-buttons end>
+        <button ion-button icon-end (click)="goToParte()">
+          Ver Parte
+          <ion-icon name="eye"></ion-icon>
+        </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="animated" *ngFor="let m of messageFeed"
+             [ngClass]="
+             {'row-start': m.from == 'user',
+               'slideInLeft': m.from == 'bot',
+               'botAnim': m.from == 'bot',
+                 'slideInRight': m.from == 'user'}">
+      <div class="max-h" *ngIf="m.from == 'bot'" style="display: flex;align-items: center;justify-content: center;">
+        <div class="circle d-flex"
+            [ngStyle]="{
+            'background-image': 'url(assets/imgs/bot.png)',
+              'background-size':'cover'
+              }">
+
+
+        </div>
+      </div>
+      <message-component
+        [ngClass]="{
+          'box-user': m.from == 'user',
+          'sb4-user': m.from == 'user',
+          'box-bot': m.from == 'bot',
+          'sb4-bot': m.from == 'bot',
+          'neo-contrary': isCollectContraryData(m.intent),
+          'neo-driver': isCollectDriverData(m.intent) }"
+          color="secondary"
+          [message]="m"
+          (blockInputConnector)="blockInput($event)">
+      </message-component>
+    </ion-row>
+
+  </ion-grid>
+  <!--ion-infinite-scroll (ionInfinite)="cargarMensajes($event)">
+    <ion-infinite-scroll-content id="infiniteScrollContent"
+                                 loadingSpinner="bubbles"
+                                 loadingText="Hmm...">
+
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll -->
+</ion-content>
+<ion-footer class="input-footer">
+
+  <ion-item padding-bottom color="transparent">
+
+    <ion-input clearOnEdit [disabled]="bloquear" type="text" (keyup.enter)="enviarMensaje();" placeholder="Escribe..." [(ngModel)]="lastMsg"></ion-input>
+    <button ion-button outline icon-only item-right (click)="enviarMensaje()">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </ion-item>
+
+
+</ion-footer>

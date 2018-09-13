@@ -1,0 +1,45 @@
+<ion-header class="animated fadeIn">
+    <ion-navbar color="primary">
+      <img src="assets/imgs/logoHeader.png" class="fotoHeader" />
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="animated fadeIn">
+  <div class="animated bounceInUp">
+    <ion-icon
+      class="neo-icon"
+      name="person-add"
+    ></ion-icon>
+  </div>
+</ion-content>
+
+<ion-footer padding class="animated fadeInDownBig">
+  <ion-list no-lines>
+    <ion-item>
+      <ion-label floating>
+        <ion-icon ios="ios-person" md="md-person" class="margin-icon"></ion-icon>
+        Usuario
+      </ion-label>
+      <ion-input
+        clearInput
+        type="text"
+        required
+        [(ngModel)]="user"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <p margin-top>
+    <button
+      ion-button
+      round
+      block
+      color="primary"
+      class="botones"
+      (click)="onRegister()"
+    >Comenzar registro facial</button>
+  </p>
+</ion-footer>
+
+
+
