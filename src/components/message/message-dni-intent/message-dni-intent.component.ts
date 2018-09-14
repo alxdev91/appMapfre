@@ -95,6 +95,7 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
   public getImage() {
     //Camera.getPicture returns a Promise, so should implement success and error cb functions
     console.log('Getting Photo');
+    console.log('MessageDniIntentComponent');
     this.dniRetrieved = false;
     this.errorRetrieveDniData = false;
     this.camera.getPicture(this.default_camera_options).then((imageData) => {

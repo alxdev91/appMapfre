@@ -74,6 +74,7 @@ export class MessageMatriculaIntentComponent {
     } else {
       this.parte.contrario.matricula = this.matricula;
       this.parte.matricula_coche_contrario = this.base64ImageString;
+
     }
     this.isAllDone = true;
     this.gate.sendInvisibleMessage(this.matricula);
@@ -104,7 +105,7 @@ export class MessageMatriculaIntentComponent {
 
   public getImage() {
     //Camera.getPicture returns a Promise, so should implement success and error cb functions
-    console.log('Getting Photo');
+    console.log('Getting Photo 1');
     this.matriculaRetrieved = false;
     this.camera.getPicture(this.default_camera_options).then((imageData) => {
       // data is base64:
