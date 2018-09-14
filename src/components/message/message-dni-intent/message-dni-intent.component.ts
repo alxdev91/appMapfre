@@ -8,6 +8,7 @@ import { ExternalsService } from 'services/externals.service';
 import { ParteService } from 'services/parte.service';
 import { ContextGateController } from 'services/context-gate-controller.service';
 import { BaseMessageWithToast } from 'app/classes/BaseMessageWithToast';
+import * as tf from '@tensorflow/tfjs';//prueba
 
 @Component({
   selector: 'message-dni-intent',
@@ -54,6 +55,20 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
     private parte: ParteService,
     private gate: ContextGateController) {
       super(toast);
+      // Use the Inception model (will be downloaded on first use)
+      // var tf = new TensorFlow('inception-v1');
+
+      // // Use a custom retrained model
+      // var tf = new TensorFlow('custom-model', {
+      //   'label': 'My Custom Model',
+      //   'model_path': "https://example.com/graphs/custom-model-2017.zip#rounded_graph.pb",
+      //   'label_path': "https://example.com/graphs/custom-model-2017.zip#retrained_labels.txt",
+      //   'input_size': 299,
+      //   'image_mean': 128,
+      //   'image_std': 128,
+      //   'input_name': 'Mul',
+      //   'output_name': 'final_result'
+      // })
   }
 
   saveImage() {
@@ -94,12 +109,12 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
 
   public getImage() {
     //Camera.getPicture returns a Promise, so should implement success and error cb functions
-    console.log('Getting Photo');
-    console.log('MessageDniIntentComponent');
+    console.log('Getting Photo 1');
     this.dniRetrieved = false;
     this.errorRetrieveDniData = false;
     this.camera.getPicture(this.default_camera_options).then((imageData) => {
       // data is base64:
+      console.log("image data " + imageData);
       this.base64ImageString = imageData + '';
       this.imgRetrieved = true;
       this.sendImage();
