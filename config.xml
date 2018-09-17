@@ -107,10 +107,7 @@
     <plugin name="cordova-android-support-gradle-release" spec="^1.4.4">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
-<<<<<<< HEAD
     <plugin name="cordova-plugin-tensorflow" spec="https://github.com/heigeo/cordova-plugin-tensorflow" />
-    <allow-navigation href="http://10.15.25.37:8100" />
-=======
-    <plugin name="cordova-plugin-tensorflow" spec="git+https://github.com/heigeo/cordova-plugin-tensorflow.git" />
->>>>>>> 5757d36684ac59250859a583091e2a24bde8160a
+    <plugin name="cordova-plugin-speechrecognition" spec="^1.2.0" />
+    <plugin name="cordova-plugin-tts" spec="^0.2.3" />
 </widget>

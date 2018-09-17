@@ -9,6 +9,10 @@ import { Insured } from 'app/classes/Insured';
 import { FormularioPage } from 'pages/formulario/formulario';
 import { ExternalsService } from 'services/externals.service';
 
+//plugin
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { TextToSpeech,TTSOptions } from '@ionic-native/text-to-speech';
+
 
 const isContraryIntent: string[] = [
   'CollectData',
@@ -39,6 +43,9 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
   private messageFeedChangeObserver: MutationObserver;
   public usuarioRegistrado: any = this.navParams.get('name');
   private once: boolean = false;
+  public msgVoice: string;//prueba
+  public textToSay: string;//prueba
+  private cd: ChangeDetectorRef
 
   constructor(
     private navParams: NavParams,
@@ -47,7 +54,9 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     private messages: MessagesService,
     private external: ExternalsService,
     private parte: ParteService,
-    public ref: ChangeDetectorRef
+    public ref: ChangeDetectorRef,
+    private speechRecognition: SpeechRecognition,
+    private textToSpeech: TextToSpeech
   ) {
     this.messages.getMessageListObserver().subscribe((messages: Message[]) => {
       this.messageFeed = messages;
@@ -85,7 +94,9 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.messageFeedChangeObserver = new MutationObserver((mutations) => {
+      //console.log('ngOnInit messageFeedChangeObserver in  ', this.messages[0].msgBody, mutations )//prueba
       this.scrollToBottom()
+      //console.log('ngOnInit messageFeedChangeObserver out  ', this.messages[0].msgBody, mutations)//prueba
     });
 
     this.messageFeedChangeObserver.observe(this.messageFeedNode.nativeElement, {
@@ -113,8 +124,45 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
     });
 
+    //prueba
+    this.speechRecognition.hasPermission().then((hasPermission:boolean) => {
+        if(!hasPermission){
+          this.speechRecognition.requestPermission()
+            .then(
+              () => console.log('Granted'),
+              () => console.log('Denied')
+            )
+        }
+    });
+
   }
 
+  //prueba
+  public startRecognition() {
+    this.speechRecognition.startListening()
+      .subscribe(
+        (matches: Array<string>) => {
+          //this.gate.sendVisibleMessage(matches[0]) //PRUEBA muestra directamente en el mensaje
+          this.msgVoice = matches[0]; // PRUEBA para que lo muetre en el campo de texto
+          this.cd.detectChanges();
+          this.enviarMensajeVoz();// PRUEBA para que lo muetre en el campo de texto
+          //this.enviarMensajeVoz(this.msgVoice);// PRUEBA para que lo muetre en el campo de texto
+        }
+      )
+  };
+
+  //prueba
+  public enviarMensajeVoz() {
+    if (this.msgVoice && this.msgVoice != '') {
+
+      this.gate.sendVisibleMessage(this.msgVoice);
+    
+      // Workaroud, replace it when find another solution
+       setTimeout(() => {
+         this.msgVoice = null;
+       }, 1);
+    }
+  }
 
   private goToParte() {
     this.navController.push('Formulario');
@@ -124,9 +172,8 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
    * This method uses de template-binded variable 'lastMsg' in order to send query to DialogFlow API
    */
   public enviarMensaje() {
-
     if (this.lastMsg && this.lastMsg != '') {
-
+      console.log("1")//prueba
       this.gate.sendVisibleMessage(this.lastMsg);
       // Workaroud, replace it when find another solution
       setTimeout(() => {
@@ -134,6 +181,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
       }, 1);
     }
   }
+
 
   public scrollToBottom() {
     this.content.scrollToBottom(300);

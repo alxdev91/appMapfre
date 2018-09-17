@@ -45,6 +45,9 @@ import { MessageMatriculaIntentComponent } from 'components/message/message_matr
 import { MessageDniIntentComponent } from 'components/message/message-dni-intent/message-dni-intent.component';
 import { MessagePhoneFormComponent } from 'components/message/message-phone-form/message-phone-form.component';
 import { MessageInnerTextComponent } from 'components/message/message-inner-text/message-inner-text.component';
+//plugin
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 import {
   cameraProvider,
@@ -135,7 +138,9 @@ import { SanitizerPipe } from 'pipes/sanitizer.pipe';
     { provide: Camera, useFactory: cameraProvider, deps: [Platform] },
     { provide: MediaCapture, useFactory: mediaCaptureProvider, deps: [Platform] },
     { provide: Media, useFactory: mediaProvider, deps: [Platform] },
-    { provide: File, useFactory: fileProvider, deps: [Platform] }
+    { provide: File, useFactory: fileProvider, deps: [Platform] },
+    SpeechRecognition,//prueba
+    TextToSpeech  //prueba
   ]
 })
 export class AppModule { }

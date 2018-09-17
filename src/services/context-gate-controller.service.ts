@@ -56,16 +56,21 @@ export class ContextGateController {
   }
 
   public sendVisibleMessage(text: string) {
+
     this.messages.addMessage(new Message(text, GLOBALS.MESSAGE_TEXT, GLOBALS.STR_USER, GLOBALS.STR_BOT));
+    console.log("2")//prueba
     this.waitAndMapResponse(this.mapfre.sendQuery(text));
+    
   }
 
 
   public sendInvisibleMessage(text: string) {
+    console.log('222')//prueba
     this.waitAndMapResponse(this.mapfre.sendQuery(text));
   }
 
   private waitAndMapResponse(objectObservable: Observable<Object>) {
+    console.log("3")//prueba
     objectObservable.subscribe((dialogResponse: any) => {
       let respuestaBot: BotResponse = new BotResponse();
       //Mapping all data
@@ -78,6 +83,9 @@ export class ContextGateController {
           metadata: { intentName }
         }
       } = dialogResponse;
+      console.log('dialogResponse', dialogResponse)//prueba
+      console.log("4")//prueba
+
       respuestaBot.pregunta = resolvedQuery;
       respuestaBot.speech = speech;
       respuestaBot.paramsRespose = parameters;
@@ -85,23 +93,25 @@ export class ContextGateController {
         let context1: BotContext = new BotContext();
         context1.name = context.name;
         context1.params = context.params;
+        console.log('5')//prueba
         return context1;
       });
       respuestaBot.intent = intentName
-
+      console.log("6")//prueba
       this.responseGate(respuestaBot);
     });
   }
 
   private responseGate(botResponse: BotResponse) {
     console.log(botResponse);
+    console.log('7')//prueba
 
     const { speech, contexts, intent, paramsRespose } = botResponse;
 
     switch (true) {
 
       case (operations.only_contains(contexts, 'yesaccidentreport')):
-
+        console.log('888')//prueba
         this.messages.addMessage(
           new Message(
             speech,
@@ -120,7 +130,7 @@ export class ContextGateController {
         break;
 
       case (operations.only_contains(contexts, 'takevideo')):
-
+        console.log('999')//prueba
         this.messages.addMessage(
           new Message(
             speech,
@@ -135,7 +145,7 @@ export class ContextGateController {
         break;
 
         case (operations.only_contains(contexts, 'takeimages')):
-
+        console.log('10')//prueba
         this.messages.addMessage(
           new Message(
             speech,
@@ -150,7 +160,7 @@ export class ContextGateController {
         break;
 
       case (operations.only_contains(contexts, 'collectdata')):
-
+        console.log('1A')//prueba
         this.updateDriverData(paramsRespose);
         this.messages.addMessage(
           new Message(
@@ -166,7 +176,7 @@ export class ContextGateController {
         break;
 
       case (operations.only_contains(contexts, 'carregistrationcontrary')):
-
+        console.log('2A')//prueba
         this.parte.contrario.matricula = paramsRespose.matriculaContrario;
 
         this.getDatosContrarioMedianteMatricula();
@@ -185,7 +195,7 @@ export class ContextGateController {
         break;
 
       case (operations.only_contains(contexts, 'endcaptures')):
-
+        console.log('3A')//prueba
         this.messages.addMessage(
           new Message(
             speech,
@@ -200,13 +210,13 @@ export class ContextGateController {
         break;
 
       case (intent ==='TakeAudioDescription') :
-
+        console.log('4A')//prueba
         this.endChatMessage(botResponse);
 
         break;
 
       case (operations.only_contains(contexts, 'collectdatacontrary')) :
-
+        console.log('5A')//prueba
         if (!this.parte.contraryDataFromCaptureImage) {
           this.parte.contrario.dni = paramsRespose.DNI;
         }
@@ -224,19 +234,19 @@ export class ContextGateController {
         break;
 
       case (operations.contains(contexts, 'collectdatacontrary_dialog_params_lastname')) :
-
+        console.log('6A')//prueba
         this.fillContraryData('collectdatacontrary_dialog_params_lastname', botResponse);
 
         break;
 
       case (operations.contains(contexts, 'collectdatacontrary_dialog_params_dni')) :
-
+        console.log('7A')//prueba
         this.fillContraryData('collectdatacontrary_dialog_params_dni', botResponse);
 
         break;
 
       case (operations.contains(contexts, 'getphonecontrary')) :
-
+        console.log('8A')//prueba
         this.selectActionMessage(botResponse);
 
         break;
@@ -244,6 +254,7 @@ export class ContextGateController {
       default:
         /* EL COMPORTAMIENTO POR DEFECTO CUANDO SE LEE UNA RESPUESTA_ACTUAL_TEXTO
         DEBE SER PINTAR EL MENSAJE DEL BOT, UN MENSAJE NORMAL */
+        console.log('9A')//prueba
         this.messages.addMessage(
           new Message(
             speech,
