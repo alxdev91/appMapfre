@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetectorRef
+import {
+  Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { IonicPage, Content, Grid, NavController, NavParams } from 'ionic-angular';
 import { Message } from 'app/classes/Message';
@@ -11,7 +12,7 @@ import { ExternalsService } from 'services/externals.service';
 
 //plugin
 import { SpeechRecognition } from '@ionic-native/speech-recognition';
-import { TextToSpeech,TTSOptions } from '@ionic-native/text-to-speech';
+import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech';
 
 
 const isContraryIntent: string[] = [
@@ -29,7 +30,8 @@ const isDriverIntent: string[] = [
 })
 @Component({
   selector: 'page-mapfrecito',
-  templateUrl: 'mapfrecito.html'
+  templateUrl: 'mapfrecito.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,// <----------------------------------------------------Cambio
 })
 export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
@@ -61,6 +63,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
   ) {
     this.messages.getMessageListObserver().subscribe((messages: Message[]) => {
       this.messageFeed = messages;
+      this.ref.detectChanges(); // <----------------------------------------------------Cambio
     });
     this.gate.hasFinished().subscribe((finished) => {
       if (finished) {
@@ -70,18 +73,8 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     // this.messages.addMessage(new Message('hi', 'phone_form', 'bot', 'user', undefined));
   }
 
-  ngAfterViewChecked () {
+  ngAfterViewChecked() {
     this.scrollToBottom();
-  }
-
-
-  public blockInput(event: any) {
-    console.log('blockInput in');
-    if (this.bloquear !== event.lock) {
-      this.bloquear = event.lock;
-      this.ref.detectChanges();
-      console.log('blockInput if out');
-    }
   }
 
   private ionViewWillEnter() {
@@ -156,22 +149,19 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
   //prueba
   public enviarMensajeVoz() {
     if (this.msgVoice && this.msgVoice != '') {
-
+      this.ref.detach();// <----------------------------------------------------Cambio
       this.gate.sendVisibleMessage(this.msgVoice);
       console.log("Ya llegueeeee!!!!!!!!")
-      this.messages.getLastMessageObserver().subscribe((messages: Message) => {
-        this.msgFeed = messages;
-      });
       console.log("Yo tambieeeeennnnnnn!!!!!!!!", this.msgFeed)
-     //this.obtMensajes();
+      //this.obtMensajes();
       // Workaroud, replace it when find another solution
-       setTimeout(() => {
-         this.msgVoice = null;
-       }, 1);
+      setTimeout(() => {
+        this.msgVoice = null;
+      }, 1);
     }
   }
 
-  public obtMensajes(){
+  public obtMensajes() {
     this.messages.getMessageListObserver()
   }
 
@@ -184,6 +174,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
    */
   public enviarMensaje() {
     if (this.lastMsg && this.lastMsg != '') {
+      this.ref.detach();// <----------------------------------------------------Cambio
       console.log("1")//prueba
       this.gate.sendVisibleMessage(this.lastMsg);
 

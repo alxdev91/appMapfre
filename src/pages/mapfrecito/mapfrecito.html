@@ -16,7 +16,7 @@
   <ion-grid>
     <ion-row class="animated" *ngFor="let m of messageFeed"
              [ngClass]="
-             {'row-startRecognition()': m.from == 'user',
+             {'row-start': m.from == 'user',
                'slideInLeft': m.from == 'bot',
                'botAnim': m.from == 'bot',
                  'slideInRight': m.from == 'user'}">
@@ -40,7 +40,7 @@
           'neo-driver': isCollectDriverData(m.intent) }"
           color="secondary"
           [message]="m"
-          (blockInputConnector)="blockInput($event)">
+      >
       </message-component>
     </ion-row>
 
@@ -58,11 +58,11 @@
   <ion-item padding-bottom color="transparent">
 
     <ion-input clearOnEdit [disabled]="bloquear" type="text" (keyup.enter)="enviarMensaje();" placeholder="Escribe..." [(ngModel)]="lastMsg"></ion-input>
-    <button ion-button outline icon-only item-right (click)="enviarMensaje()" id="btnsend">
+    <button ion-button outline icon-only item-right (click)="enviarMensaje()">
       <ion-icon name="send"></ion-icon>
     </button>
 
-    <button ion-button round outline icon-only item-right (click)="startRecognition();" id="btnRecognition">
+    <button ion-button round outline icon-only item-right (click)="startRecognition();">
       <ion-icon name="mic"></ion-icon>
     </button>
   </ion-item>
