@@ -8,7 +8,10 @@ import { ParteService } from 'services/parte.service';
 import { Insured } from 'app/classes/Insured';
 import { FormularioPage } from 'pages/formulario/formulario';
 import { ExternalsService } from 'services/externals.service';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
 
+let recognition;
+declare var $:any;
 
 const isContraryIntent: string[] = [
   'CollectData',
@@ -47,7 +50,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     private messages: MessagesService,
     private external: ExternalsService,
     private parte: ParteService,
-    public ref: ChangeDetectorRef
+    public ref: ChangeDetectorRef   
   ) {
     this.messages.getMessageListObserver().subscribe((messages: Message[]) => {
       this.messageFeed = messages;
@@ -59,11 +62,9 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     });
     // this.messages.addMessage(new Message('hi', 'phone_form', 'bot', 'user', undefined));
   }
-
   ngAfterViewChecked () {
     this.scrollToBottom();
   }
-
 
   public blockInput(event: any) {
     if (this.bloquear !== event.lock) {
@@ -126,6 +127,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
   public enviarMensaje() {
 
     if (this.lastMsg && this.lastMsg != '') {
+     
 
       this.gate.sendVisibleMessage(this.lastMsg);
       // Workaroud, replace it when find another solution
@@ -133,8 +135,10 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
         this.lastMsg = null;
       }, 1);
     }
-  }
 
+    
+  }
+  
   public scrollToBottom() {
     this.content.scrollToBottom(300);
   }

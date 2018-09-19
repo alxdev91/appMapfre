@@ -18,6 +18,10 @@ import { MediaCapture } from '@ionic-native/media-capture';
 import { HttpClientModule } from '@angular/common/http';
 import { Media, MediaObject } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+//added libs speech to text
+import { TextToSpeech } from '@ionic-native/text-to-speech';
+
 //SERVICES
 import { MapfreService } from 'services/mapfre.service';
 import { TokenService } from 'services/token.service';
@@ -135,7 +139,9 @@ import { SanitizerPipe } from 'pipes/sanitizer.pipe';
     { provide: Camera, useFactory: cameraProvider, deps: [Platform] },
     { provide: MediaCapture, useFactory: mediaCaptureProvider, deps: [Platform] },
     { provide: Media, useFactory: mediaProvider, deps: [Platform] },
-    { provide: File, useFactory: fileProvider, deps: [Platform] }
+    { provide: File, useFactory: fileProvider, deps: [Platform] },
+    SpeechRecognition,
+    TextToSpeech //add provider speech to text
   ]
 })
 export class AppModule { }

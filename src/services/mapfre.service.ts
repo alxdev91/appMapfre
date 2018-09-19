@@ -11,14 +11,14 @@ import { TokenService } from 'services/token.service';
 @Injectable()
 export class MapfreService {
 
-  private token: string = '2aed3a537e17420f87b6dd6a07b21967';
+  private token: string = '306a6c58044948bd82061e8d9d675a3c';
   private urlDialogFlow: string = 'https://api.dialogflow.com/v1/';
   private SESSION_ID: string;
 
 
   constructor(public httpClient: HttpClient, private tokenService: TokenService) {
 
-    this.updateToken();
+    //this.updateToken();
 
       //Otherwise, get a Session ID by just calling a pseudo TIMESTAMP
 
@@ -28,13 +28,14 @@ export class MapfreService {
     console.log('API Service initiallized. Session ID : ' + this.SESSION_ID);
 
   }
-
+//quitar método 
+/*
   private updateToken () {
     this.tokenService.getToken(GLOBALS.NEOCOVER_TOKEN).subscribe( (response: any) => {
       this.token = '2aed3a537e17420f87b6dd6a07b21967';
       // this.token = response.token;
     });
-  }
+  }*/
 
   public getHeaders(): HttpHeaders {
 
