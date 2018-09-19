@@ -38,6 +38,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
   //TODO: implement input lock when last message context asks for photo
   public messageFeed: Message[] = [];
+
   public lastMsg: string;
   public bloquear: boolean = false;
   private messageFeedChangeObserver: MutationObserver;
@@ -45,7 +46,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
   private once: boolean = false;
   public msgVoice: string;//prueba
   public textToSay: string;//prueba
-  private cd: ChangeDetectorRef
+  public msgFeed: Message;
 
   constructor(
     private navParams: NavParams,
@@ -75,9 +76,11 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
 
   public blockInput(event: any) {
+    console.log('blockInput in');
     if (this.bloquear !== event.lock) {
       this.bloquear = event.lock;
       this.ref.detectChanges();
+      console.log('blockInput if out');
     }
   }
 
@@ -94,9 +97,8 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.messageFeedChangeObserver = new MutationObserver((mutations) => {
-      //console.log('ngOnInit messageFeedChangeObserver in  ', this.messages[0].msgBody, mutations )//prueba
+      console.log('MutationObserver mutations', mutations)//prueba
       this.scrollToBottom()
-      //console.log('ngOnInit messageFeedChangeObserver out  ', this.messages[0].msgBody, mutations)//prueba
     });
 
     this.messageFeedChangeObserver.observe(this.messageFeedNode.nativeElement, {
@@ -125,15 +127,15 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     });
 
     //prueba
-    this.speechRecognition.hasPermission().then((hasPermission:boolean) => {
-        if(!hasPermission){
-          this.speechRecognition.requestPermission()
-            .then(
-              () => console.log('Granted'),
-              () => console.log('Denied')
-            )
-        }
-    });
+    // this.speechRecognition.hasPermission().then((hasPermission:boolean) => {
+    //     if(!hasPermission){
+    //       this.speechRecognition.requestPermission()
+    //         .then(
+    //           () => console.log('Granted'),
+    //           () => console.log('Denied')
+    //         )
+    //     }
+    // });
 
   }
 
@@ -144,7 +146,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
         (matches: Array<string>) => {
           //this.gate.sendVisibleMessage(matches[0]) //PRUEBA muestra directamente en el mensaje
           this.msgVoice = matches[0]; // PRUEBA para que lo muetre en el campo de texto
-          this.cd.detectChanges();
+          //this.cd.detectChanges();
           this.enviarMensajeVoz();// PRUEBA para que lo muetre en el campo de texto
           //this.enviarMensajeVoz(this.msgVoice);// PRUEBA para que lo muetre en el campo de texto
         }
@@ -156,12 +158,21 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     if (this.msgVoice && this.msgVoice != '') {
 
       this.gate.sendVisibleMessage(this.msgVoice);
-    
+      console.log("Ya llegueeeee!!!!!!!!")
+      this.messages.getLastMessageObserver().subscribe((messages: Message) => {
+        this.msgFeed = messages;
+      });
+      console.log("Yo tambieeeeennnnnnn!!!!!!!!", this.msgFeed)
+     //this.obtMensajes();
       // Workaroud, replace it when find another solution
        setTimeout(() => {
          this.msgVoice = null;
        }, 1);
     }
+  }
+
+  public obtMensajes(){
+    this.messages.getMessageListObserver()
   }
 
   private goToParte() {
@@ -175,6 +186,7 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     if (this.lastMsg && this.lastMsg != '') {
       console.log("1")//prueba
       this.gate.sendVisibleMessage(this.lastMsg);
+
       // Workaroud, replace it when find another solution
       setTimeout(() => {
         this.lastMsg = null;
