@@ -18,9 +18,8 @@ import { MediaCapture } from '@ionic-native/media-capture';
 import { HttpClientModule } from '@angular/common/http';
 import { Media, MediaObject } from '@ionic-native/media';
 import { File } from '@ionic-native/file';
-import { SpeechRecognition } from '@ionic-native/speech-recognition';
-//added libs speech to text
-import { TextToSpeech } from '@ionic-native/text-to-speech';
+
+
 
 //SERVICES
 import { MapfreService } from 'services/mapfre.service';
@@ -49,6 +48,10 @@ import { MessageMatriculaIntentComponent } from 'components/message/message_matr
 import { MessageDniIntentComponent } from 'components/message/message-dni-intent/message-dni-intent.component';
 import { MessagePhoneFormComponent } from 'components/message/message-phone-form/message-phone-form.component';
 import { MessageInnerTextComponent } from 'components/message/message-inner-text/message-inner-text.component';
+//plugin
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { TextToSpeech } from '@ionic-native/text-to-speech';
+
 
 import {
   cameraProvider,

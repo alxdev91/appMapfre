@@ -70,8 +70,10 @@ export class ContextGateController {
   }
 
   public sendVisibleMessage(text: string) {
+
     this.messages.addMessage(new Message(text, GLOBALS.MESSAGE_TEXT, GLOBALS.STR_USER, GLOBALS.STR_BOT));
     this.waitAndMapResponse(this.mapfre.sendQuery(text));
+    
   }
 
 
@@ -102,6 +104,7 @@ export class ContextGateController {
           metadata: { intentName }
         }
       } = dialogResponse;
+
       respuestaBot.pregunta = resolvedQuery;
       //respuesta (speech) que emite el bot
       respuestaBot.speech = speech;
@@ -119,7 +122,6 @@ export class ContextGateController {
         return context1;
       });
       respuestaBot.intent = intentName
-
       this.responseGate(respuestaBot);
     });
   }
@@ -261,7 +263,6 @@ export class ContextGateController {
         break;
 
       case (operations.contains(contexts, 'collectdatacontrary_dialog_params_dni')) :
-
         this.fillContraryData('collectdatacontrary_dialog_params_dni', botResponse);
 
         break;
