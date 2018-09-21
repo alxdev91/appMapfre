@@ -40,7 +40,7 @@
           'neo-driver': isCollectDriverData(m.intent) }"
           color="secondary"
           [message]="m"
-          (blockInputConnector)="blockInput($event)">
+      >
       </message-component>
     </ion-row>
 
@@ -60,6 +60,10 @@
     <ion-input clearOnEdit [disabled]="bloquear" type="text" (keyup.enter)="enviarMensaje();" placeholder="Escribe..." [(ngModel)]="lastMsg"></ion-input>
     <button ion-button outline icon-only item-right (click)="enviarMensaje()">
       <ion-icon name="send"></ion-icon>
+    </button>
+
+    <button ion-button round outline icon-only item-right (click)="startRecognition();">
+      <ion-icon name="mic"></ion-icon>
     </button>
   </ion-item>
 

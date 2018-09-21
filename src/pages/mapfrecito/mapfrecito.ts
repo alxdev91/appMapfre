@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetectorRef
+import {
+  Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { IonicPage, Content, Grid, NavController, NavParams } from 'ionic-angular';
 import { Message } from 'app/classes/Message';
@@ -8,6 +9,10 @@ import { ParteService } from 'services/parte.service';
 import { Insured } from 'app/classes/Insured';
 import { FormularioPage } from 'pages/formulario/formulario';
 import { ExternalsService } from 'services/externals.service';
+
+//plugin
+import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { TextToSpeech, TTSOptions } from '@ionic-native/text-to-speech';
 
 
 const isContraryIntent: string[] = [
@@ -25,7 +30,8 @@ const isDriverIntent: string[] = [
 })
 @Component({
   selector: 'page-mapfrecito',
-  templateUrl: 'mapfrecito.html'
+  templateUrl: 'mapfrecito.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,// <----------------------------------------------------Cambio
 })
 export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
@@ -34,11 +40,15 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
   //TODO: implement input lock when last message context asks for photo
   public messageFeed: Message[] = [];
+
   public lastMsg: string;
   public bloquear: boolean = false;
   private messageFeedChangeObserver: MutationObserver;
   public usuarioRegistrado: any = this.navParams.get('name');
   private once: boolean = false;
+  public msgVoice: string;
+  public textToSay: string;
+  public msgFeed: Message;
 
   constructor(
     private navParams: NavParams,
@@ -47,10 +57,13 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     private messages: MessagesService,
     private external: ExternalsService,
     private parte: ParteService,
-    public ref: ChangeDetectorRef
+    public ref: ChangeDetectorRef,
+    private speechRecognition: SpeechRecognition,
+    private textToSpeech: TextToSpeech
   ) {
     this.messages.getMessageListObserver().subscribe((messages: Message[]) => {
       this.messageFeed = messages;
+      this.ref.detectChanges(); // <----------------------------------------------------Cambio
     });
     this.gate.hasFinished().subscribe((finished) => {
       if (finished) {
@@ -60,16 +73,8 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
     // this.messages.addMessage(new Message('hi', 'phone_form', 'bot', 'user', undefined));
   }
 
-  ngAfterViewChecked () {
+  ngAfterViewChecked() {
     this.scrollToBottom();
-  }
-
-
-  public blockInput(event: any) {
-    if (this.bloquear !== event.lock) {
-      this.bloquear = event.lock;
-      this.ref.detectChanges();
-    }
   }
 
   private ionViewWillEnter() {
@@ -115,6 +120,33 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
 
   }
 
+  //Funcion que incia reconocimiento de voz
+  public startRecognition() {
+    this.speechRecognition.startListening()
+      .subscribe(
+        (matches: Array<string>) => {
+          this.msgVoice = matches[0];
+          this.enviarMensajeVoz();
+        }
+      )
+  };
+
+  //Funcion que envia mensaje devoz ya convertido en texto
+  public enviarMensajeVoz() {
+    if (this.msgVoice && this.msgVoice != '') {
+      this.ref.detach();// <----------------------------------------------------Cambio
+      this.gate.sendVisibleMessage(this.msgVoice);
+  
+      // Workaroud, replace it when find another solution
+      setTimeout(() => {
+        this.msgVoice = null;
+      }, 1);
+    }
+  }
+
+  public obtMensajes() {
+    this.messages.getMessageListObserver()
+  }
 
   private goToParte() {
     this.navController.push('Formulario');
@@ -124,17 +156,16 @@ export class MapfrecitoPage implements OnInit, AfterViewChecked {
    * This method uses de template-binded variable 'lastMsg' in order to send query to DialogFlow API
    */
   public enviarMensaje() {
-
     if (this.lastMsg && this.lastMsg != '') {
-
+      this.ref.detach();// <----------------------------------------------------Cambio
       this.gate.sendVisibleMessage(this.lastMsg);
+
       // Workaroud, replace it when find another solution
       setTimeout(() => {
         this.lastMsg = null;
       }, 1);
     }
   }
-
   public scrollToBottom() {
     this.content.scrollToBottom(300);
   }

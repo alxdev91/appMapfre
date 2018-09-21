@@ -9,8 +9,9 @@ import * as GLOBALS from 'app/app.constants';
 import { BotContext } from 'app/classes/BotContext';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-
 import * as operations from 'app/classes/ContextOperator';
+//importamos el componente de text to speech ya instalado
+import {TextToSpeech} from '@ionic-native/text-to-speech';
 
 const CONTRARY_DATA_MAPPER = {
   'collectdatacontrary_dialog_params_lastname': {
@@ -28,10 +29,15 @@ const CONTRARY_DATA_MAPPER = {
  */
 @Injectable()
 export class ContextGateController {
-
+  //variable respuestavoz que contendra el speech del bot
+  public respuestavoz='';
   private finished$: Observable<boolean>;
   private finished: Observer<boolean>;
-
+  //variables para le text to speech
+  text: string;
+  rate: number;
+  locale: string;
+  
   /**
    * Injecting all the services involved in the application
    */
@@ -39,12 +45,20 @@ export class ContextGateController {
     private mapfre: MapfreService,
     private parte: ParteService,
     private externals: ExternalsService,
-    private messages: MessagesService
+    private messages: MessagesService,
+    //objeto de la clase text to speech
+    private tts: TextToSpeech
   ) {
     this.finished$ = Observable.create((observer: Observer<any>) => {
       this.finished = observer;
       this.finished.next(false);
     });
+    //Idioma de la voz y asignación del speech del bot a la variable text
+    this.text = 
+    this.respuestavoz;
+    this.rate = 1;
+    this.locale = 'es-MX';
+    
   }
 
   public hasFinished (): Observable<boolean> {
@@ -56,13 +70,25 @@ export class ContextGateController {
   }
 
   public sendVisibleMessage(text: string) {
+
     this.messages.addMessage(new Message(text, GLOBALS.MESSAGE_TEXT, GLOBALS.STR_USER, GLOBALS.STR_BOT));
     this.waitAndMapResponse(this.mapfre.sendQuery(text));
+    
   }
 
 
   public sendInvisibleMessage(text: string) {
     this.waitAndMapResponse(this.mapfre.sendQuery(text));
+  }
+  //metodo que reproduce el speech dle bot
+  playText() {
+    this.tts.speak({
+      text: this.respuestavoz,
+      rate: this.rate,
+      locale: this.locale
+    })
+      .then(() => console.log('Success'))
+      .catch((reason: any) => console.log(reason));
   }
 
   private waitAndMapResponse(objectObservable: Observable<Object>) {
@@ -78,9 +104,17 @@ export class ContextGateController {
           metadata: { intentName }
         }
       } = dialogResponse;
+
       respuestaBot.pregunta = resolvedQuery;
+      //respuesta (speech) que emite el bot
       respuestaBot.speech = speech;
       respuestaBot.paramsRespose = parameters;
+
+      //asignación de valor a respuestavoz
+      this.respuestavoz=respuestaBot.speech;
+      //llamado al método del speech to text
+      this.playText();
+      
       respuestaBot.contexts = contexts.map((context) => {
         let context1: BotContext = new BotContext();
         context1.name = context.name;
@@ -88,7 +122,6 @@ export class ContextGateController {
         return context1;
       });
       respuestaBot.intent = intentName
-
       this.responseGate(respuestaBot);
     });
   }
@@ -230,7 +263,6 @@ export class ContextGateController {
         break;
 
       case (operations.contains(contexts, 'collectdatacontrary_dialog_params_dni')) :
-
         this.fillContraryData('collectdatacontrary_dialog_params_dni', botResponse);
 
         break;

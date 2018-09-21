@@ -55,6 +55,20 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
     private parte: ParteService,
     private gate: ContextGateController) {
       super(toast);
+      // Use the Inception model (will be downloaded on first use)
+      // var tf = new TensorFlow('inception-v1');
+
+      // // Use a custom retrained model
+      // var tf = new TensorFlow('custom-model', {
+      //   'label': 'My Custom Model',
+      //   'model_path': "https://example.com/graphs/custom-model-2017.zip#rounded_graph.pb",
+      //   'label_path': "https://example.com/graphs/custom-model-2017.zip#retrained_labels.txt",
+      //   'input_size': 299,
+      //   'image_mean': 128,
+      //   'image_std': 128,
+      //   'input_name': 'Mul',
+      //   'output_name': 'final_result'
+      // })
   }
 
   saveImage() {
