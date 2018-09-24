@@ -8,7 +8,7 @@ import { ExternalsService } from 'services/externals.service';
 import { ParteService } from 'services/parte.service';
 import { ContextGateController } from 'services/context-gate-controller.service';
 import { BaseMessageWithToast } from 'app/classes/BaseMessageWithToast';
-import * as tf from '@tensorflow/tfjs';//prueba
+
 
 @Component({
   selector: 'message-dni-intent',
