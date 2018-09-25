@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
@@ -32,8 +33,103 @@
   </script>-->
 
   <link href="build/main.css" rel="stylesheet">
+  <script>
+    // var app = {
+    //   mostraMensagem: function (valor) {
+    //     // document.getElementById("progress").innerHTML = valor;
+    //     console.log(valor);
+    //   },
+    //   // Application Constructor
+    //   initialize: function () {
+    //     var self = this;
+
+    //     document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+    //   },
+
+    //   // deviceready Event Handler
+    //   //
+    //   // Bind any cordova events here. Common events are:
+    //   // 'pause', 'resume', etc.
+    //   onDeviceReady: function () {
+    //     this.receivedEvent('deviceready');
+    //     var self = this;
+    //     self.mostraMensagem("iniciou!");
+    //     $("#deviceready").removeClass("blink");//para não ficar piscando.
+    //     var self = this;
+
+    //     var tf = new TensorFlow('custom-model', {
+    //       'label': 'My Custom Model',
+    //       // 'label_path': "http://www.davifelipe.com.br/arquivos/star_wars_graph.zip#retrained_labels.txt",
+    //       // 'model_path': "http://www.davifelipe.com.br/arquivos/star_wars_graph.zip#rounded_graph.pb",
+    //       'label_path': "modelcustomvision/labels.txt",
+    //       'model_path': "modelcustomvision/model.pb",
+    //       'input_size': 299,
+    //       'image_mean': 128,
+    //       'image_std': 128,
+    //       'input_name': 'Mul',
+    //       'output_name': 'final_result'
+    //     });
+    //     //var tf = new TensorFlow('inception-v1');
+    //     self.mostraMensagem("Carregando...");
+    //     tf.onprogress = function (evt) {
+    //       if (evt['status'] == 'downloading') {
+    //         self.mostraMensagem("Downloading model files...");
+    //         self.mostraMensagem(evt.label);
+    //         if (evt.detail) {
+    //           // evt.detail is from the FileTransfer API
+
+    //           var carregados = evt.detail.loaded / 1024 / 1024;
+    //           var total = evt.detail.total / 1024 / 1024;
+
+    //           carregados = carregados.toFixed(2);
+    //           total = total.toFixed(2);
+
+    //           var perc = (carregados * 100 / total).toFixed(2);
+
+    //           self.mostraMensagem(`${perc}% ${carregados}MB de ${total}MB`);
+    //         }
+    //       } else if (evt['status'] == 'unzipping') {
+    //         self.mostraMensagem("Extracting contents...");
+    //       } else if (evt['status'] == 'initializing') {
+    //         self.mostraMensagem("Initializing TensorFlow");
+    //       }
+    //     };
+
+    //     var imgData224 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASsAAAErCAYAAA...';
+
+    //     var aData = imgData224.split(',');
+    //     // document.getElementById("preview").src = imgData224;
+
+    //     tf.classify(aData[1]).then(function (results) {
+    //       results.forEach(function (result) {
+    //         self.mostraMensagem(result.title + " " + result.confidence);
+    //         console.log(result.title + " " + result.confidence);
+    //       });
+    //     },
+    //       function (error) {
+    //         self.mostraMensagem(error);
+    //       });
+
+    //   },
+
+    //   // Update DOM on a Received Event
+    //   receivedEvent: function (id) {
+    //     var parentElement = document.getElementById(id);
+    //     var listeningElement = parentElement.querySelector('.listening');
+    //     var receivedElement = parentElement.querySelector('.received');
+
+    //     listeningElement.setAttribute('style', 'display:none;');
+    //     receivedElement.setAttribute('style', 'display:block;');
+
+    //     console.log('Received Event: ' + id);
+    //   }
+    // };
+
+    // app.initialize();
+  </script>
 
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -50,4 +146,5 @@
   <script src="build/main.js"></script>
 
 </body>
+
 </html>

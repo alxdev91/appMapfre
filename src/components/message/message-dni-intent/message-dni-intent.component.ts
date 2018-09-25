@@ -8,7 +8,8 @@ import { ExternalsService } from 'services/externals.service';
 import { ParteService } from 'services/parte.service';
 import { ContextGateController } from 'services/context-gate-controller.service';
 import { BaseMessageWithToast } from 'app/classes/BaseMessageWithToast';
-
+// import * as TensorFlow from  '@tensorflow/tfjs';
+import * as _tf from '../../../../plugins/cordova-plugin-tensorflow/www/tensorflow';
 @Component({
   selector: 'message-dni-intent',
   host: {
@@ -16,6 +17,7 @@ import { BaseMessageWithToast } from 'app/classes/BaseMessageWithToast';
   },
   templateUrl: 'message-dni-intent.template.html'
 })
+
 export class MessageDniIntentComponent extends BaseMessageWithToast {
 
   @Input() public message: Message;
@@ -53,7 +55,7 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
     private externals: ExternalsService,
     private parte: ParteService,
     private gate: ContextGateController) {
-      super(toast);
+    super(toast);
   }
 
   saveImage() {
@@ -89,7 +91,25 @@ export class MessageDniIntentComponent extends BaseMessageWithToast {
       this.dniRetrieved = false;
       this.presentToast('Ha habido un error reconociendo el de la foto, lo sentimos', 'bottom', 3000);
     });
-
+    var tf = new TensorFlow('custom-model', {
+      'label': 'My Custom Model',
+      // 'label_path': "http://www.davifelipe.com.br/arquivos/star_wars_graph.zip#retrained_labels.txt",
+      // 'model_path': "http://www.davifelipe.com.br/arquivos/star_wars_graph.zip#rounded_graph.pb",
+      'label_path': "modelcustomvision/labels.txt",
+      'model_path': "modelcustomvision/model.pb",
+      'input_size': 299,
+      'image_mean': 128,
+      'image_std': 128,
+      'input_name': 'Mul',
+      'output_name': 'final_result'
+    });
+    // var imgData = "/9j/4AAQSkZJRgABAQEAYABgAAD//gBGRm ...";
+    var imgData = this.base64ImageString;
+    tf.classify(imgData).then(function (results) {
+      results.forEach(function (result) {
+        console.log(result.title + " " + result.confidence);
+      });
+    });
   }
 
   public getImage() {
